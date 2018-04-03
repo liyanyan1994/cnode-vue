@@ -1,46 +1,21 @@
 <template>
   <div class="topics-list">
-      <ul class="unique-topics-list">
-          <li>
+      <ul class="unique-topics-list" v-if="topics.length>0">
+          <li v-for="item in topics" :key="item.id">
               <div class="avatar">
-                  <router-link to='/user'>
-                    <img alt="头像" src="../../assets/images/github.svg">
+                  <router-link :to="{name:'User',params:{loginname: item.author.loginname}}">
+                    <img alt="头像" :src="item.author.avatar_url" :title="item.author.loginname">
                   </router-link>
               </div>
-              <div class="reply-view">23/27</div>
+              <div class="reply-view" v-if="item.reply_count !== undefined">{{item.reply_count}}/{{item.visit_count}}</div>
               <span class="tag top">置顶</span>
-              <router-link class="title" to="/topic">为社区做贡献，帮社区写自动化测试代码</router-link>
+              <router-link class="title" :to="{name: 'Topic',params:{id: item.id}}">{{item.title}}</router-link>
               <div class="last-reply-time">
-                  <time>16 小时前</time>
-              </div>
-          </li>
-          <li>
-              <div class="avatar">
-                  <router-link to='/user'>
-                    <img alt="头像" src="../../assets/images/github.svg">
-                  </router-link>
-              </div>
-              <div class="reply-view">23/27</div>
-              <span class="tag top">置顶</span>
-              <router-link class="title" to="/topic">为社区做贡献，帮社区写自动化测试代码</router-link>
-              <div class="last-reply-time">
-                  <time>16 小时前</time>
-              </div>
-          </li>
-          <li>
-              <div class="avatar">
-                  <router-link to='/user'>
-                    <img alt="头像" src="../../assets/images/github.svg">
-                  </router-link>
-              </div>
-              <div class="reply-view">23/27</div>
-              <span class="tag top">置顶</span>
-              <router-link class="title" to="/topic">为社区做贡献，帮社区写自动化测试代码</router-link>
-              <div class="last-reply-time">
-                  <time>16 小时前</time>
+                  <time>{{item.last_reply_at | fromNow }</time>
               </div>
           </li>
       </ul>
+      <p v-else class="no-topics">无话题</p>
   </div>
 </template>
 
@@ -50,7 +25,15 @@ export default {
     data() {
         return {}
     },
-    components: {}
+    props: {
+        topics: {
+            type: Array,
+            default() {
+                return []
+            },
+            isrequired: true
+        }
+    }
 }
 </script>
 
@@ -113,6 +96,9 @@ export default {
             font-size: 12px;
             margin-top: 8px;
         }
+    }
+    .no-topics {
+        padding: 10px;
     }
 }
 </style>

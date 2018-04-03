@@ -7,7 +7,7 @@ import Topic from '@/views/topic/Topic'
 import NoMatch from '@/views/404/404'
 import Messages from '@/views/message/message'
 
-import HelloWorld from '@/components/HelloWorld'
+import HelloWorld from '@/components/HelloWorld/'
 
 Vue.use(Router)
 
@@ -24,7 +24,7 @@ export default new Router({
             component: HelloWorld
         },
         {
-            path: '/user',
+            path: '/user/:loginname',
             name: 'User',
             component: User
         },

@@ -9,12 +9,17 @@ import Lists from '@/components/topics-list/TopicsList'
 import SideBars from '@/components/sidebar/SideBar'
 import 'iview/dist/styles/iview.css'
 import './assets/scss/common.scss'
+import moment from 'moment'
 
 Vue.use(iview)
 Vue.component('Lists', Lists)
 Vue.component('SideBars', SideBars)
 
 Vue.config.productionTip = false
+
+Vue.filter('fromNow', date => {
+    return moment(date).fromNow()
+})
 
 /* eslint-disable no-new */
 new Vue({

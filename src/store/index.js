@@ -20,6 +20,7 @@ var store = new Vuex.Store({
         messageCount: 0
     },
     actions: {
+        // 检查是否已登录
         checkLogin({ state, dispatch, commit }) {
             if (state.accessToken) {
                 axios
@@ -35,17 +36,19 @@ var store = new Vuex.Store({
                     })
             }
         },
+        // 获取未读消息的条数
         fetchMessageCount({ commit }) {
             axios.get(API_CONFIG.messageCount).then(res => {
                 if (res.data.success) {
-                    commit('updateLoginStatus', res.data.data)
+                    commit('updateMessageCount', res.data.data)
                 }
             })
         }
     },
     mutations: {
+        // 更新登录状态
         updateLoginStatus(state, data) {
-            if (state.access_token) {
+            if (data.accessToken) {
                 window.localStorage.access_token = window.localStorage.save_access_token = state.accessToken =
                     data.accessToken
                 state.userInfo = data.userInfo
@@ -53,6 +56,15 @@ var store = new Vuex.Store({
                 state.userInfo = data
             }
             state.isLogin = true
+        },
+        // 更新未读消息数
+        updateMessageCount (state, count) {
+            state.messageCount = count
+        },
+        logout(state) {
+            window.localStorage.removeItem('access_token')
+            state.isLogin = false
+            state.accessToken = ''
         }
     }
 })

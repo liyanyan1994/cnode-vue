@@ -9,13 +9,13 @@
             </div>
             <div class="user-info">
                 <div class="user">
-                    <img src="http://o4j806krb.qnssl.com/public/images/cnodejs_light.svg" alt="avatar"/>
-                    <span>imzengyang</span>
+                    <img :src="user.avatar_url" alt="avatar"/>
+                    <span>{{user.loginname}}</span>
                 </div>
-                <div>120积分</div>
+                <div>{{user.score}}</div>
                 <div class="view-topics-collections">
                     <router-link to="/collections">查看话题收藏</router-link>
-                    <div class="create-at">注册时间 8个月前</div>
+                    <div class="create-at">注册时间 {{user.create_at | fromNow}}</div>
                 </div>
             </div>
         </div>
@@ -33,12 +33,43 @@
 </template>
 
 <script>
+import axios from 'axios'
+import API_CONFIG from '@/api/index'
 export default {
     name: 'User',
     data() {
-        return {}
+        return {
+            user: {
+                // 用户详情
+                loginname: '--',
+                avatar_url:
+                    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAACAQMAAACnuvRZAAAAA1BMVEX29vYACyOqAAAACklEQVQI12MAAgAABAABINItbwAAAABJRU5ErkJggg==',
+                githubUsername: 'alsotang',
+                create_at: Date.now(),
+                score: 0,
+                recent_topics: [], // 最近创建的话题
+                recent_replies: [] // 最近参与的话题
+            }
+        }
     },
-    components: {}
+    created() {
+        this.fetchUserDetail()
+    },
+    methods: {
+        fetchUserDetail() {
+            axios
+                .get(`${API_CONFIG.user}${this.$route.params.loginname}`)
+                .then(res => {
+                    if (res.data.success) {
+                        this.user = res.data.data
+                    }
+                })
+                .catch(e => {
+                    this.$Message.warning('不存在此用户')
+                    this.$router.replace('/')
+                })
+        }
+    }
 }
 </script>
 

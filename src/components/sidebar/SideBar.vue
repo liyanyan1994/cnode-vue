@@ -1,14 +1,35 @@
 <template>
   <aside class="sidebar">
       <div class="personal-information">
-          <div>
+          <div v-if="from!= 'topic'">
+              <div v-if="isLogin">
+                  <div class="top user-select-none">个人信息</div>
+                  <div class="info user-select-none">
+                      <router-link :to="{name: 'User',params: {loginname: userInfo.loginname}}">
+                          <img :src="userInfo.avatar_url" alt="头像"/>
+                      </router-link>
+                      <router-link :to="{name: 'User',params: {loginname:userInfo.loginname}}" class="nickname">{{userInfo.loginname}}</router-link>
+                  </div>
+                  <div class="pubulish-topic">
+                      <router-link to="/release/topic">发布话题</router-link>
+                  </div>
+              </div>
+              <div v-else class="tourist-box">
+                  <div class="cnode">CNode: Node.js专业中文社区</div>
+                  <div class="tourist">
+                      <span>当前是游客状态,您可以</span>
+                      <router-link to="/login">登录</router-link>
+                  </div>
+              </div>
+          </div>
+          <div v-else>
               <div class="top user-select-none">作者</div>
               <div class="info user-select-none">
-                  <router-link to="/">
-                    <img src="../../assets/images/github.svg" alt="touxiang">
+                  <router-link :to="{name:'User',params:{loginname: author.loginname}}">
+                    <img :src="author.avatar_url" alt="头像">
                   </router-link>
-                  <router-link to="/user">
-                    <em class="nickname">imzengyang</em>
+                  <router-link :to="{name:'User',params:{loginname:author.loginname}}">
+                    <em class="nickname">{{author.nickname}}</em>
                   </router-link>
               </div>
           </div>
@@ -42,12 +63,28 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
     name: 'SideBar',
-    data() {
-        return {}
+    props: {
+        from: {
+            type: String,
+            default: ''
+        },
+        author: {
+            type: Object,
+            default() {
+                return {
+                    avatar_url: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAACAQMAAACnuvRZAAAAA1BMVEX29vYACyOqAAAACklEQVQI12MAAgAABAABINItbwAAAABJRU5ErkJggg==',
+                    id: '',
+                    loginname: ''
+                }
+            }
+        }
     },
-    components: {}
+    computed: {
+        ...mapState(['userInfo', 'isLogin'])
+    }
 }
 </script>
 
@@ -84,6 +121,9 @@ export default {
                 color: #333;
                 cursor: pointer;
             }
+        }
+        .pubulish-topic{
+            padding: 10px;
         }
         .friendship-community {
             padding: 10px;

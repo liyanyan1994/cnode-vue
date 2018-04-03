@@ -17,11 +17,48 @@
 <script>
 import Headers from './components/headers/Headers'
 import Footers from './components/footers/Footers'
+import axios from 'axios'
 export default {
     name: 'App',
     components: { Headers, Footers },
     created() {
+        this.axiosConfig()
         this.$store.dispatch('checkLogin')
+    },
+    methods: {
+        axiosConfig() {
+            axios.interceptors.request.use(
+                config => {
+                    if (config.method === 'post') {
+                        config.data = Object.assign(
+                            { accesstoken: this.$store.state.accessToken },
+                            config.data
+                        )
+                    }
+                    if (config.method === 'get') {
+                        config.params = Object.assign(
+                            { accesstoken: this.$store.state.accessToken },
+                            config.params
+                        )
+                    }
+                    return config
+                },
+                e => {
+                    this.$Message.warning('API请求失败！')
+                    return Promise.reject(e)
+                }
+            )
+
+            axios.interceptors.response.use(
+                res => {
+                    return res
+                },
+                e => {
+                    this.$Message.warning('请求超时or服务器出错')
+                    return Promise.reject(e)
+                }
+            )
+        }
     }
 }
 </script>

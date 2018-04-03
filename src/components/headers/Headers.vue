@@ -6,21 +6,31 @@
           </router-link>
           <nav class="nav-box">
             <router-link to="/" >首页</router-link>
-            <router-link to="/messages" >未读消息</router-link>
+            <router-link to="/messages" v-if="isLogin" :class="{'unread-msg': messageCount > 0}">未读消息</router-link>
             <a href="https://github.com/liyanyan1994" target="_blank">关于作者</a>
-            <router-link to="/login" >登录</router-link>
+            <a href="javascript:;" v-if="isLogin" @click="loginout">退出</a>
+            <router-link to="/login" v-else >登录</router-link>
           </nav>
       </div>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
     name: 'headers',
     data() {
         return {}
     },
-    components: {}
+    computed: {
+        ...mapState(['isLogin', 'messageCount'])
+    },
+    methods: {
+        loginout() {
+            this.$store.commit('logout')
+            this.$Message.success('已退出')
+        }
+    }
 }
 </script>
 
@@ -49,6 +59,18 @@ export default {
                 margin-left: 20px;
                 &:hover {
                     color: #fff;
+                }
+            }
+            .unread-msg{
+                &:after{
+                    position: absolute;
+                    content: '';
+                    top: -3px;
+                    right: -9px;
+                    width: 10px;
+                    height: 10px;
+                    border-radius: 50%;
+                    background-color: #f50;
                 }
             }
         }
