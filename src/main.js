@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import store from './store'
 import iview from 'iview'
 import Lists from '@/components/topics-list/TopicsList'
 import SideBars from '@/components/sidebar/SideBar'
@@ -19,6 +20,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })
