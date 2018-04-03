@@ -6,17 +6,14 @@
 
 <script>
 export default {
-  name: "name",
-  data() {
-    return {
-
-    }
-  },
-  components: {
-
-  }
+    name: 'name',
+    data() {
+        return {}
+    },
+    components: {}
 }
 </script>
 
 <style scoped lang="scss">
+
 </style>

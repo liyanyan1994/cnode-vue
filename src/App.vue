@@ -18,29 +18,32 @@
 import Headers from './components/headers/Headers'
 import Footers from './components/footers/Footers'
 export default {
-  name: 'App',
-  components: {Headers, Footers}
+    name: 'App',
+    components: { Headers, Footers },
+    created() {
+        this.$store.dispatch('checkLogin')
+    }
 }
 </script>
 
 <style lang="scss">
-.go-top{
+.go-top {
     position: fixed;
     z-index: 666;
     bottom: 109px;
     right: 0px;
     padding: 5px 10px;
-    border-radius:12px 0 0 12px;
+    border-radius: 12px 0 0 12px;
     background-color: #fff;
     cursor: pointer;
-    &:hover{
+    &:hover {
         color: #f6f6f6;
     }
-    p{
+    p {
         color: #666;
     }
 }
-.router-view{
+.router-view {
     display: flex;
     flex-direction: column;
 }

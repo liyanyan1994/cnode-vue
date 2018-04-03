@@ -21,31 +21,35 @@
 <script>
 import Msg from '@/components/msg/Msg'
 export default {
-  name: 'name',
-  data () {
-    return {}
-  },
-  components: {Msg}
+    name: 'name',
+    data() {
+        return {}
+    },
+    components: { Msg }
 }
 </script>
 
 <style scoped lang="scss">
 @import '../../assets/scss/_variable.scss';
 .message {
-  .top {
-    padding: 10px 15px;
-    background-color: $boxTopColor ;
-    a {
-      color: #80bd01;
-      &:hover {
-        text-decoration: underline;
-      }
+    .top {
+        padding: 10px 15px;
+        background-color: $boxTopColor;
+        a {
+            color: #80bd01;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+        em {
+            color: #ccc;
+        }
+        span {
+            color: #999;
+        }
     }
-    em{color: #ccc;}
-    span{color: #999;}
-  }
-  .past-msg{
-      margin-top: 15px;
-  }
+    .past-msg {
+        margin-top: 15px;
+    }
 }
 </style>

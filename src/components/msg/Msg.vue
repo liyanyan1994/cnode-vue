@@ -24,24 +24,22 @@
 
 <script>
 export default {
-  name: 'name',
-  data () {
-    return {
-      loading: false
-    }
-  },
-  components: {
-
-  }
+    name: 'name',
+    data() {
+        return {
+            loading: false
+        }
+    },
+    components: {}
 }
 </script>
 
 <style scoped lang="scss">
-.msg-list{
+.msg-list {
     position: relative;
     background-color: #fff;
     padding: 10px;
-    .msg-loading{
+    .msg-loading {
         position: absolute;
         top: 0;
         left: 0;
@@ -49,19 +47,19 @@ export default {
         right: 0;
         background-color: #f7f7f7;
     }
-    li{
+    li {
         padding: 10px 0;
-        &:not(:nth-last-child(1)){
+        &:not(:nth-last-child(1)) {
             border-bottom: 1px solid #f6f6f6;
         }
-        >div{
+        > div {
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
         }
-        a{
+        a {
             color: #08c;
-            &:hover{
+            &:hover {
                 text-decoration: underline;
             }
         }

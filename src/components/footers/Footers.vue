@@ -24,37 +24,37 @@
 
 <script>
 export default {
-  name: 'footers',
-  data () {
-    return {}
-  },
-  components: {}
+    name: 'footers',
+    data() {
+        return {}
+    },
+    components: {}
 }
 </script>
 
 <style lang="scss">
 @import '../../assets/scss/_variable.scss';
 .footers {
-  background-color: #fff;
-  padding: 25px 0 35px 0;
-  .footers-box {
-    width: $width;
-    margin: 0 auto;
-    .vendor {
-      li {
-        float: left;
-        margin: 15px 30px 0 0;
-        span {
-          margin-right: 10px;
-          color: #333;
+    background-color: #fff;
+    padding: 25px 0 35px 0;
+    .footers-box {
+        width: $width;
+        margin: 0 auto;
+        .vendor {
+            li {
+                float: left;
+                margin: 15px 30px 0 0;
+                span {
+                    margin-right: 10px;
+                    color: #333;
+                }
+            }
+            .cnode {
+                img {
+                    width: 100px;
+                }
+            }
         }
-      }
-      .cnode {
-        img {
-          width: 100px;
-        }
-      }
     }
-  }
 }
 </style>

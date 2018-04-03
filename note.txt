@@ -4,3 +4,4 @@
 
 3.vuex的状态管理 store  
 4.npm install vuex --save
+5.npm install axios --save

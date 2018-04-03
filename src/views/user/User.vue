@@ -34,66 +34,66 @@
 
 <script>
 export default {
-  name: 'User',
-  data () {
-    return {}
-  },
-  components: {}
+    name: 'User',
+    data() {
+        return {}
+    },
+    components: {}
 }
 </script>
 
 <style scoped lang="scss">
 @import '../../assets/scss/_variable.scss';
 .user {
-  .box {
-    margin-bottom: 15px;
-    background-color: #fff;
-    border-radius: 3px;
-    .box-title{
-        padding: 10px;
-        background-color: $boxTopColor;
-        a{
-            color: #80bd01;
-            &:hover{
-                text-decoration: underline;
+    .box {
+        margin-bottom: 15px;
+        background-color: #fff;
+        border-radius: 3px;
+        .box-title {
+            padding: 10px;
+            background-color: $boxTopColor;
+            a {
+                color: #80bd01;
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+            .slashes {
+                color: #ccc;
+            }
+            span {
+                color: #999;
             }
         }
-        .slashes{
-            color: #ccc;
-        }
-        span{
-            color: #999;
-        }
-    }
-    .user-info{
-        padding: 15px 10px;
-        .user{
-            margin-bottom: 10px;
-            img{
-                width: 50px;
-                height: 50px;
-                background-color: #f6f6f6;
-                vertical-align: middle;
-            }
-            span{
-                margin-left: 10px;
-                vertical-align: middle;
+        .user-info {
+            padding: 15px 10px;
+            .user {
+                margin-bottom: 10px;
+                img {
+                    width: 50px;
+                    height: 50px;
+                    background-color: #f6f6f6;
+                    vertical-align: middle;
+                }
+                span {
+                    margin-left: 10px;
+                    vertical-align: middle;
+                }
             }
         }
-    }
-    .view-topics-collection{
-        margin-top: 5px;
-        a{
-            color: #333;
-            &:hover{
-                text-decoration: underline;
+        .view-topics-collection {
+            margin-top: 5px;
+            a {
+                color: #333;
+                &:hover {
+                    text-decoration: underline;
+                }
             }
         }
+        .create-at {
+            margin-top: 10px;
+            color: #666;
+        }
     }
-    .create-at {
-        margin-top: 10px;
-        color: #666;
-    }
-  }
 }
 </style>

@@ -15,46 +15,43 @@
 
 <script>
 export default {
-  name: 'Collections',
-  data () {
-    return {
-      loading: false
-    }
-  },
-  components: {
-
-  }
+    name: 'Collections',
+    data() {
+        return {
+            loading: false
+        }
+    },
+    components: {}
 }
 </script>
 
 <style scoped lang="scss">
 @import '../../assets/scss/_variable.scss';
-.collections{
+.collections {
     position: relative;
     min-height: 250px;
     background-color: #fff;
-    .collections-loading{
+    .collections-loading {
         position: absolute;
         left: calc(50% - 30px);
         top: 80px;
     }
-    .collection-title{
+    .collection-title {
         padding: 10px;
         background-color: $boxTopColor;
-        a{
+        a {
             color: #80bd01;
-            &:hover{
+            &:hover {
                 text-decoration: underline;
                 color: #333;
             }
         }
-        em{
+        em {
             color: #ccc;
         }
-        span{
+        span {
             color: #999;
         }
     }
-
 }
 </style>

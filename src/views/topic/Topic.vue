@@ -62,25 +62,23 @@
 
 <script>
 export default {
-  name: 'name',
-  data () {
-    return {
-      loading: false
-    }
-  },
-  components: {
-
-  }
+    name: 'name',
+    data() {
+        return {
+            loading: false
+        }
+    },
+    components: {}
 }
 </script>
 
 <style scoped lang="scss">
-.topics-container{
-    .detail{
+.topics-container {
+    .detail {
         position: relative;
         background-color: #fff;
         min-height: 300px;
-        .loading{
+        .loading {
             position: absolute;
             z-index: 666;
             top: 0;
@@ -91,13 +89,13 @@ export default {
             background-color: #fff;
             text-align: center;
         }
-        .topic-top{
+        .topic-top {
             padding: 15px 10px;
             border-bottom: 1px solid #eee;
         }
-        .topic-title{
+        .topic-title {
             overflow: hidden;
-            .tag{
+            .tag {
                 float: left;
                 margin-top: 3px;
                 padding: 2px 4px;
@@ -108,7 +106,7 @@ export default {
                 font-weight: bold;
                 white-space: nowrap;
             }
-            h1{
+            h1 {
                 float: left;
                 width: calc(100% - 50px);
                 margin: -4px 5px 0 10px;
@@ -117,29 +115,30 @@ export default {
                 font-size: 22px;
             }
         }
-        .topic-bottom{
+        .topic-bottom {
             margin-top: 10px;
-            span,a{
+            span,
+            a {
                 font-size: 12px;
             }
-            a{
+            a {
                 color: #333;
-                &:hover{
+                &:hover {
                     text-decoration: underline;
                 }
             }
         }
-        .collection{
+        .collection {
             text-align: right;
-            button{
+            button {
                 position: relative;
                 padding: 5px 10px;
                 background-color: #80bd01;
                 color: #fff;
-                border:none;
+                border: none;
                 font-weight: 500;
                 border-radius: 3px;
-                &:after{
+                &:after {
                     position: absolute;
                     content: '';
                     top: 0;
@@ -150,36 +149,36 @@ export default {
                     background: #000;
                     opacity: 0;
                 }
-                &:active:after{
-                    opacity: .2;
+                &:active:after {
+                    opacity: 0.2;
                 }
             }
         }
-        .operation-edit{
-            i{
+        .operation-edit {
+            i {
                 cursor: pointer;
                 font-size: 22px;
             }
         }
-        .content{
+        .content {
             padding: 10px 20px;
         }
     }
-    .reply{
+    .reply {
         margin-top: 15px;
         border-radius: 3px;
-        .reply-count{
+        .reply-count {
             padding: 10px 15px;
             background-color: #f6f6f6;
         }
-        li{
+        li {
             padding: 10px 10px 30px 10px;
             overflow: hidden;
             background-color: #fff;
         }
-        .avatar{
+        .avatar {
             float: left;
-            img{
+            img {
                 width: 30px;
                 height: 30px;
                 background-color: #f7f7f7;
@@ -187,24 +186,24 @@ export default {
                 border-radius: 3px;
             }
         }
-        .reply-right{
+        .reply-right {
             float: left;
             width: calc(100% - 40px);
             overflow: hidden;
             margin: 0 0 0 10px;
         }
-        .reply-author{
+        .reply-author {
             float: left;
-            a{
+            a {
                 font-size: 12px;
                 color: #000;
             }
-            span{
+            span {
                 margin-left: 5px;
                 font-size: 12px;
                 color: #08c;
             }
-            strong{
+            strong {
                 margin-left: 5px;
                 font-size: 12px;
                 background-color: #80bd01;
@@ -214,22 +213,22 @@ export default {
                 font-weight: bold;
             }
         }
-        .operation{
+        .operation {
             float: right;
-            i{
+            i {
                 cursor: pointer;
                 font-size: 16px;
                 vertical-align: middle;
             }
-            em{
+            em {
                 margin-left: 3px;
             }
-            >div{
+            > div {
                 float: left;
                 margin-left: 7px;
             }
         }
-        .reply-content{
+        .reply-content {
             clear: left;
             padding-left: 40px;
         }

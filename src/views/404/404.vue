@@ -12,12 +12,12 @@
 
 <script>
 export default {
-  name: 'NoMatch'
+    name: 'NoMatch'
 }
 </script>
 
 <style scoped lang="scss">
-.no-match{
+.no-match {
     padding-top: 30px;
     text-align: center;
     display: flex;
@@ -29,14 +29,14 @@ export default {
     -webkit-box-pack: center;
     -webkit-box-align: start;
 
-.page-txt{
+    .page-txt {
         padding: 10px 0;
         border: 1px solid #ddd;
         // background-color: #f5f5f5;
     }
-    .go{
+    .go {
         margin-top: 15px;
-        span{
+        span {
             cursor: pointer;
         }
     }

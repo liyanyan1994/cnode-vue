@@ -12,41 +12,41 @@ import HelloWorld from '@/components/HelloWorld'
 Vue.use(Router)
 
 export default new Router({
-routes: [
-    {
-      path: '/',
-      name: 'HomePage',
-      component: Index
-    },
-    {
-      path: '/helloword',
-      name: 'Hello',
-      component: HelloWorld
-    },
-    {
-      path: '/user',
-      name: 'User',
-      component: User
-    },
-    {
-      path: '/collections',
-      name: 'Collections',
-      component: Collections
-    },
-    {
-      path: '/topic',
-      name: 'Topic',
-      component: Topic
-    },
-    {
-      path: '/messages',
-      name: 'Messages',
-      component: Messages
-    },
-    {
-      path: '*',
-      name: 'NotMatch',
-      component: NoMatch
-    }
-  ]
+    routes: [
+        {
+            path: '/',
+            name: 'HomePage',
+            component: Index
+        },
+        {
+            path: '/helloword',
+            name: 'Hello',
+            component: HelloWorld
+        },
+        {
+            path: '/user',
+            name: 'User',
+            component: User
+        },
+        {
+            path: '/collections',
+            name: 'Collections',
+            component: Collections
+        },
+        {
+            path: '/topic',
+            name: 'Topic',
+            component: Topic
+        },
+        {
+            path: '/messages',
+            name: 'Messages',
+            component: Messages
+        },
+        {
+            path: '*',
+            name: 'NotMatch',
+            component: NoMatch
+        }
+    ]
 })

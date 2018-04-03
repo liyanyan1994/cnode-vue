@@ -43,72 +43,68 @@
 
 <script>
 export default {
-  name: 'SideBar',
-  data () {
-    return {
-
-    }
-  },
-  components: {
-
-  }
+    name: 'SideBar',
+    data() {
+        return {}
+    },
+    components: {}
 }
 </script>
 
 <style scoped lang="scss">
 @import '../../assets/scss/_variable.scss';
-.sidebar{
+.sidebar {
     float: right;
     width: $sidebarWidth;
-    >div{
+    > div {
         margin-bottom: 20px;
     }
-    .personal-information{
+    .personal-information {
         background-color: #fff;
         border-radius: 5px;
-        .top{
+        .top {
             padding: 10px;
             background-color: $boxTopColor;
         }
-        .info{
+        .info {
             padding: 10px;
-            a{
+            a {
                 display: inline-block;
                 vertical-align: middle;
             }
-            img{
+            img {
                 display: inline-block;
                 width: 50px;
                 height: 50px;
                 background-color: #f7f7ff;
                 object-fit: cover;
             }
-            .nickname{
+            .nickname {
                 margin-left: 15px;
                 color: #333;
                 cursor: pointer;
             }
         }
-        .friendship-community{
-            padding:10px;
-            img{
+        .friendship-community {
+            padding: 10px;
+            img {
                 width: 150px;
             }
         }
     }
-    .friendship-community{
+    .friendship-community {
         background-color: #fff;
         border-radius: 5px;
-        .top{
+        .top {
             padding: 10px;
             background-color: $boxTopColor;
         }
-        .community{
+        .community {
             padding: 10px;
-            .sep10{
+            .sep10 {
                 height: 10px;
             }
-            img{
+            img {
                 width: 150px;
             }
         }

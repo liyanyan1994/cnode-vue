@@ -20,46 +20,45 @@
 </template>
 
 <script>
-
 export default {
-  name: 'index',
-  data () {
-    return {
-      total: 999, // 总条数
-      page: 1 // 当前页
+    name: 'index',
+    data() {
+        return {
+            total: 999, // 总条数
+            page: 1 // 当前页
+        }
     }
-  }
 }
 </script>
 
 <style scoped lang="scss">
 .index-section {
-  .section-container {
-    background-color: #fff;
-    box-shadow: 0 0 8px #ccc;
-    .nav {
-      padding: 10px 0;
-      background-color: #f6f6f6;
-      border-radius: 5px 5px 0 0;
-      a {
-        padding: 2px 5px;
-        margin-left: 15px;
-        color: #80bd01;
-        &.active {
-          background-color: #80bd01;
-          color: #fff;
+    .section-container {
+        background-color: #fff;
+        box-shadow: 0 0 8px #ccc;
+        .nav {
+            padding: 10px 0;
+            background-color: #f6f6f6;
+            border-radius: 5px 5px 0 0;
+            a {
+                padding: 2px 5px;
+                margin-left: 15px;
+                color: #80bd01;
+                &.active {
+                    background-color: #80bd01;
+                    color: #fff;
+                }
+            }
         }
-      }
+        .topics-list {
+            position: relative;
+            border-radius: 0 0 5px 5px;
+            overflow: hidden;
+            min-height: 1000px;
+        }
+        .panination-box {
+            margin: 15px 0 20px 10px;
+        }
     }
-    .topics-list{
-        position: relative;
-        border-radius: 0 0 5px 5px;
-        overflow: hidden;
-        min-height: 1000px;
-    }
-    .panination-box{
-        margin:15px 0 20px 10px;
-    }
-  }
 }
 </style>
