@@ -21,11 +21,11 @@
         </div>
         <div class="box">
             <div class="box-title">最近创建的话题</div>
-            <Lists/>
+            <Lists :topics="user.recent_topics"/>
         </div>
         <div class="box">
             <div class="box-title">最近参与的话题</div>
-            <Lists/>
+            <Lists :topics="user.recent_replies"/>
         </div>
       </div>
       <SideBars/>

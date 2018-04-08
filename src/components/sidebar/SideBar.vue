@@ -28,8 +28,8 @@
                   <router-link :to="{name:'User',params:{loginname: author.loginname}}">
                     <img :src="author.avatar_url" alt="头像">
                   </router-link>
-                  <router-link :to="{name:'User',params:{loginname:author.loginname}}">
-                    <em class="nickname">{{author.nickname}}</em>
+                  <router-link :to="{name:'User',params:{loginname: author.loginname}}">
+                    <em class="nickname">{{author.loginname}}</em>
                   </router-link>
               </div>
           </div>
@@ -125,10 +125,19 @@ export default {
         .pubulish-topic{
             padding: 10px;
         }
-        .friendship-community {
+        .tourist-box{
             padding: 10px;
-            img {
-                width: 150px;
+        }
+        .cnode{
+            color: #000;
+        }
+        .tourist{
+            margin-top:15px;
+            a{
+                color: #2d8cf0;
+                &:hover{
+                    text-decoration: underline;
+                }
             }
         }
     }

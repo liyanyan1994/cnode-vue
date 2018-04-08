@@ -9,3 +9,5 @@
 5.npm install axios --save
 
 6.npm install moment --save-dev
+
+7.npm install simplemde --save

@@ -34,7 +34,7 @@ export default new Router({
             component: Collections
         },
         {
-            path: '/topic',
+            path: '/topic/:id',
             name: 'Topic',
             component: Topic
         },

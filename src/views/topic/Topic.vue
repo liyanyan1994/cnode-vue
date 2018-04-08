@@ -6,69 +6,168 @@
               <div class="topic-top">
                   <div class="topic-title">
                       <span class="tag">置顶</span>
-                      <h1>请不要再发薅羊毛帖子</h1>
+                      <h1>{{detail.title}}</h1>
                   </div>
                   <div class="topic-bottom">
                       <div class="topic-info">
-                            <span>• 发布于 3个小时前 • 作者 </span>
-                            <router-link to="/user">JackSonTian</router-link>
-                            <span> • 次浏览 •最后一次编辑是 10分十分钟前 • 来自分享</span>
+                            <span>• 发布于 {{detail.create_at | fromNow}} • 作者 </span>
+                            <router-link :to="`/user/${detail.author.loginname}`">{{detail.author.loginname}}</router-link>
+                            <span> • {{detail.visit_count}} 次浏览 •最后一次编辑是 {{detail.last_reply_at | fromNow}} • 来自{{detail.tab | comFrom}}</span>
                       </div>
                       <div class="collection user-select-none">
                           <button>收藏</button>
                       </div>
-                      <div class="operation-edit">
-                          <router-link to="/release">
+                      <div class="operation-edit" v-if ="isLogin && detail.author_id ===userInfo.id">
+                          <router-link :to="`/release/${detail.id}`">
                             <Icon type="compose"  title="编辑"/>
                           </router-link>
                       </div>
                   </div>
               </div>
-              <div class="content markdown-body">RT</div>
+              <div class="content markdown-body" v-html="detail.content"></div>
           </div>
+           <!-- 回复区域 -->
           <div class="reply">
-              <div class="reply-count">4 回复</div>
+              <div class="reply-count">{{detail.reply_count}} 回复</div>
               <ul>
-                  <li>
+                  <li v-for="(item, index) in detail.replies" :key="item.id">
                       <div class="avatar">
-                          <router-link to="/user">
-                            <img src="../../assets/images/github.svg" alt="头像"/>
+                          <router-link :to="`/user/${item.author.loginname}`">
+                            <img :src="item.author.avatar_url" alt="头像"/>
                           </router-link>
                       </div>
                       <div class="reply-right">
                           <div class="reply-author">
-                              <router-link to="/user">Atian12</router-link>
-                              <span>1楼 · 3小时前</span>
-                              <strong>作者</strong>
+                              <router-link :to="`/user/${item.author.loginname}`">{{item.author.loginname}}</router-link>
+                              <span>{{index + 1 }}楼 · {{item.create_at | fromNow }}</span>
+                              <strong v-if="detail.author.loginname === item.author.loginname">作者</strong>
                           </div>
                           <div class="operation user-select-none">
                               <div>
-                                  <Icon type="ios-heart"></Icon>
-                                  <em>3</em>
+                                  <Icon :type="item.is_uped ? 'ios-heart': 'ios-heart-outline'" @click.native="likeBtn(item.id,item.author,index)"></Icon>
+                                  <em>{{item.ups.length}}</em>
                               </div>
-                              <div>
+                              <div v-if="isLogin" @click="replyOthers(item.author.loginname)">
                                   <Icon type="reply"></Icon>
                               </div>
                           </div>
                       </div>
-                      <div class="reply-content markdown-body">okkkk wo juede hao</div>
+                      <div class="reply-content markdown-body" v-html="item.content"></div>
                   </li>
               </ul>
           </div>
+          <!-- 新建评论 -->
+          <div class="insert-reply" :class="{hidden: !isLogin}">
+              <div class="tip">添加回复</div>
+              <textarea id="markdown-editor"></textarea>
+              <div class="reply-btn">
+                  <button type="button" @click="insertReply">回复</button>
+              </div>
+          </div>
       </div>
-      <SideBars/>
+      <SideBars :author="detail.author" from="topic"/>
   </section>
 </template>
 
 <script>
+import axios from 'axios'
+import SimpleMDE from 'simplemde'
+import API_CONFIG from '@/api/index'
+import { mapState } from 'vuex'
 export default {
     name: 'name',
     data() {
         return {
-            loading: false
+            loading: false,
+            insertBtnText: '回复',
+            simplemde: null,
+            detail: {
+                author: {
+                    avatar_url:
+                        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAACAQMAAACnuvRZAAAAA1BMVEX29vYACyOqAAAACklEQVQI12MAAgAABAABINItbwAAAABJRU5ErkJggg==',
+                    loginname: '--'
+                },
+                author_id: '',
+                content: '',
+                create_at: Date.now(),
+                good: false,
+                id: '',
+                is_collect: false,
+                last_reply_at: Date.now(),
+                replies: [],
+                reply_count: 0,
+                tab: '',
+                title: '',
+                top: false,
+                visit_count: 0
+            }
         }
     },
-    components: {}
+    computed: {
+        ...mapState(['isLogin', 'userInfo'])
+    },
+    beforeRouteEnter: (to, from, next) => {
+        window.scrollTo(0, 0)
+        next(vm => {
+            vm.fetchTopic()
+        })
+    },
+    mounted() {
+        this.initMarkdownEditor()
+    },
+    methods: {
+        // 获取主题详情
+        fetchTopic() {
+            this.loading = true
+            axios
+                .get(`${API_CONFIG.topicDetail}${this.$route.params.id}`)
+                .then(res => {
+                    if (res.data.success) {
+                        this.detail = res.data.data
+                        this.loading = false
+                        // this.$nextTick(() => {
+                        //     var code = document.querySelectorAll('.markdown-body code')
+                        //     for (var i = 0; i < code.length; i++) {
+                        //         hljs.highlightBlock(code[i])
+                        //     }
+                        // })
+                    }
+                })
+        },
+        initMarkdownEditor() {
+            this.simplemde = new SimpleMDE({
+                element: document.getElementById('markdown-editor'),
+                spellChecker: false,
+                autoDownloadFontAwesome: false
+            })
+        },
+        insertReply() {
+            console.log('insertReply')
+        },
+        replyOthers(loginname) {
+            console.log(loginname)
+        },
+        likeBtn(id, author, index) {
+            console.log(index)
+        }
+
+    },
+    filters: {
+        comFrom(tab) {
+            switch (tab) {
+            case 'ask':
+                return '问答'
+            case 'share':
+                return '分享'
+            case 'job':
+                return '招聘'
+            case 'good':
+                return '精华'
+            default:
+                return ''
+            }
+        }
+    }
 }
 </script>
 
@@ -77,7 +176,7 @@ export default {
     .detail {
         position: relative;
         background-color: #fff;
-        min-height: 300px;
+        // min-height: 300px;
         .loading {
             position: absolute;
             z-index: 666;
@@ -175,6 +274,7 @@ export default {
             padding: 10px 10px 30px 10px;
             overflow: hidden;
             background-color: #fff;
+            border-top: 1px solid #f0f0f0;
         }
         .avatar {
             float: left;
@@ -231,6 +331,54 @@ export default {
         .reply-content {
             clear: left;
             padding-left: 40px;
+        }
+    }
+    // 新建评论
+    .insert-reply {
+        margin-top: 15px;
+        background: #fff;
+
+        &.hidden {
+            z-index: -1111;
+            position: fixed;
+            top: -1000px;
+            left: -1000px;
+            visibility: hidden;
+        }
+
+        .tip {
+            padding: 10px;
+            background: #f6f6f6;
+        }
+
+        .reply-btn {
+            padding: 0 0 10px 10px;
+
+            button {
+                position: relative;
+                color: #fff;
+                background: #08c;
+                border-radius: 3px;
+                padding: 5px 10px;
+                font-weight: 500;
+                border: none;
+
+                &:after {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    border-radius: 3px;
+                    background: #000;
+                    opacity: 0;
+                }
+
+                &:active:after {
+                    opacity: .1;
+                }
+            }
         }
     }
 }

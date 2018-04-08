@@ -8,10 +8,10 @@
                   </router-link>
               </div>
               <div class="reply-view" v-if="item.reply_count !== undefined">{{item.reply_count}}/{{item.visit_count}}</div>
-              <span class="tag top">置顶</span>
-              <router-link class="title" :to="{name: 'Topic',params:{id: item.id}}">{{item.title}}</router-link>
+              <span class="tag" :class="tag(item).className" v-if="item.tab">{{tag(item).text}}</span>
+              <router-link class="title" :to="{name: 'Topic', params:{id: item.id}}">{{item.title}}</router-link>
               <div class="last-reply-time">
-                  <time>{{item.last_reply_at | fromNow }</time>
+                  <time>{{item.last_reply_at | fromNow }}</time>
               </div>
           </li>
       </ul>
@@ -32,6 +32,49 @@ export default {
                 return []
             },
             isrequired: true
+        }
+    },
+    methods: {
+        tag(topic) {
+            if (topic.topic) {
+                return {
+                    text: '置顶',
+                    className: 'top'
+                }
+            }
+            if (topic.good) {
+                return {
+                    text: '精华',
+                    className: 'good'
+                }
+            }
+            switch (topic.tab) {
+            case 'ask':
+                return {
+                    text: '问答',
+                    className: 'ask'
+                }
+            case 'share':
+                return {
+                    text: '分享',
+                    className: 'share'
+                }
+            case 'job':
+                return {
+                    text: '招聘',
+                    className: 'job'
+                }
+            case 'dev':
+                return {
+                    text: '测试',
+                    className: 'dev'
+                }
+            default:
+                return {
+                    text: '',
+                    className: 'default'
+                }
+            }
         }
     }
 }
@@ -70,22 +113,27 @@ export default {
             float: left;
             margin-top: 7px;
             font-size: 12px;
+            color: #999;
             padding: 2px 4px;
             border-radius: 3px;
             font-weight: 500;
+            background-color: #e5e5e5;
+            &.top,
+            &.good {
+                background-color: #80bd01;
+                color: #fff;
+            }
         }
-        .top {
-            background-color: #80bd01;
-            color: #fff;
-        }
+
         .title {
+            float: left;
             display: inline-block;
             margin: 6px 0 0 5px;
-            font-size: 16px;
+            width: calc(100% - 230px);
             white-space: nowrap;
+            font-size: 16px;
             overflow: hidden;
             text-overflow: ellipsis;
-            width: calc(100% - 230px);
             &:hover {
                 text-decoration: underline;
                 color: #333;
