@@ -5,7 +5,7 @@
               <div class="loading" v-show="loading">Loading...</div>
               <div class="topic-top">
                   <div class="topic-title">
-                      <span class="tag">置顶</span>
+                      <span class="tag" v-if="detail.top || detail.good">{{detail | tagName}}</span>
                       <h1>{{detail.title}}</h1>
                   </div>
                   <div class="topic-bottom">
@@ -14,8 +14,8 @@
                             <router-link :to="`/user/${detail.author.loginname}`">{{detail.author.loginname}}</router-link>
                             <span> • {{detail.visit_count}} 次浏览 •最后一次编辑是 {{detail.last_reply_at | fromNow}} • 来自{{detail.tab | comFrom}}</span>
                       </div>
-                      <div class="collection user-select-none">
-                          <button>收藏</button>
+                      <div class="collection user-select-none" v-if="isLogin">
+                          <button @click="collectionBtn">{{detail.is_collect ? '取消收藏': '收藏'}}</button>
                       </div>
                       <div class="operation-edit" v-if ="isLogin && detail.author_id ===userInfo.id">
                           <router-link :to="`/release/${detail.id}`">
@@ -61,7 +61,7 @@
               <div class="tip">添加回复</div>
               <textarea id="markdown-editor"></textarea>
               <div class="reply-btn">
-                  <button type="button" @click="insertReply">回复</button>
+                  <button type="button" @click="insertReply">{{insertBtnText}}</button>
               </div>
           </div>
       </div>
@@ -141,18 +141,82 @@ export default {
                 autoDownloadFontAwesome: false
             })
         },
+        // 插入评论
         insertReply() {
             console.log('insertReply')
+            if (this.insertBtnText === '发送中...') {
+                return
+            }
+            var val = this.simplemde.value()
+            if (!val) {
+                return this.$Message.warning('内容不能为空')
+            }
+            this.insertBtnText = '发送中...'
+            axios
+                .post(`${API_CONFIG.replies}${this.detail.id}/replies`, {
+                    content: val
+                })
+                .then(res => {
+                    if (res.data.success) {
+                        this.simplemde.value('')
+                        this.$Message.success('发送成功！')
+                        this.insertBtnText = '回复'
+                        this.fetchTopic()
+                    }
+                })
+                .catch(e => {
+                    this.insertBtnText = '回复'
+                })
         },
+        // 回复别人
         replyOthers(loginname) {
-            console.log(loginname)
+            var top = document.querySelector('.insert-reply').offsetTop
+            window.scrollTo(0, top - 80)
+            this.simplemde.value(`@${loginname}`)
         },
+        collectionBtn() {
+            var url = this.detail.is_collect
+                ? API_CONFIG.cancelCollection
+                : API_CONFIG.collection
+            axios
+                .post(url, { topic_id: this.detail.id })
+                .then(res => {
+                    if (res.data.success) {
+                        this.detail.is_collect = !this.detail.is_collect
+                    }
+                })
+                .catch(e => e)
+        },
+        // 点赞
         likeBtn(id, author, index) {
-            console.log(index)
+            try {
+                if (!this.isLogin) {
+                    throw new Error('您未登陆')
+                }
+                if (author.loginname === this.userInfo.loginname) {
+                    throw new Error('您不能赞自己')
+                }
+            } catch (error) {
+                return this.$Message.warning(error.message)
+            }
+            axios.post(`${API_CONFIG.like}${id}/ups`).then(res => {
+                if (res.data.success) {
+                    if (res.data.action === 'down') {
+                        this.detail.replies[index].is_uped = false
+                        this.detail.replies[index].ups.pop()
+                    } else {
+                        this.detail.replies[index].is_uped = false
+                        this.detail.replies[index].ups.push(Date.now())
+                    }
+                }
+            }).catch(e => e)
         }
-
     },
     filters: {
+        tagName(detail) {
+            if (detail.top) return '置顶'
+            if (detail.good) return '精华'
+        },
         comFrom(tab) {
             switch (tab) {
             case 'ask':
@@ -376,7 +440,7 @@ export default {
                 }
 
                 &:active:after {
-                    opacity: .1;
+                    opacity: 0.1;
                 }
             }
         }

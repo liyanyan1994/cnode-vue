@@ -7,11 +7,11 @@
                  <em> / </em>
                  <span>新消息</span>
              </div>
-            <Msg/>
+            <Msg :readMessages="message.hasnot_read_messages" :loading="loading"/>
          </div>
          <div class="past-msg">
-             <div class="top">已读消息</div>
-              <Msg/>
+             <div class="top" >已读消息</div>
+              <Msg :readMessages="message.has_read_messages" :loading="loading"/>
          </div>
      </div>
     <SideBars/>
@@ -20,10 +20,44 @@
 
 <script>
 import Msg from '@/components/msg/Msg'
+import API_CONFIG from '@/api/index'
+import axios from 'axios'
 export default {
     name: 'name',
     data() {
-        return {}
+        return {
+            loading: true,
+            message: {
+                has_read_messages: [],
+                hasnot_read_messages: []
+            }
+        }
+    },
+    created() {
+        this.fetchMessage()
+    },
+    // mounted() {
+    //     if (this.$store.state.messageCount > 0) {
+    //         axios
+    //             .post(API_CONFIG.messageMarkAll)
+    //             .then(res => {})
+    //             .catch(e => e)
+    //     }
+    // },
+    methods: {
+        fetchMessage() {
+            axios
+                .get(API_CONFIG.fetchMessages)
+                .then(res => {
+                    if (res.data.success) {
+                        this.loading = false
+                        this.message = res.data.data
+                    }
+                })
+                .catch(e => {
+                    this.$router.replact('/')
+                })
+        }
     },
     components: { Msg }
 }

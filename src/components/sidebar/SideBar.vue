@@ -11,7 +11,7 @@
                       <router-link :to="{name: 'User',params: {loginname:userInfo.loginname}}" class="nickname">{{userInfo.loginname}}</router-link>
                   </div>
                   <div class="pubulish-topic">
-                      <router-link to="/release/topic">发布话题</router-link>
+                      <router-link to="/release/create">发布话题</router-link>
                   </div>
               </div>
               <div v-else class="tourist-box">

@@ -164,7 +164,13 @@ em {
         width: calc(100% - #{$sidebarWidth + 20 });
     }
 }
-.router-view>section{
-    min-height: 80vh;
-    flex: 1;
+.router-view{
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    &>section{
+        min-height: 80vh;
+        flex: 1;
+        -webkit-box-flex: 1;
+    }
 }

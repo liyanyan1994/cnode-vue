@@ -1,20 +1,18 @@
 <template>
   <div class="msg-list">
       <div class="msg-loading" v-show="loading">Loading...</div>
-      <div class="no-msg">暂时无消息</div>
+      <div class="no-msg" v-show="readMessages.length === 0">暂时无消息</div>
       <ul>
-          <li>
-              <div>
-                  <router-link to="/user">liyanyan1994</router-link>
+          <li v-for="item  in readMessages" :key="item.id">
+              <div v-if="item.type === 'reply'">
+                  <router-link :to="`/user/${item.author.loginname}`">{{item.author.loginname}}</router-link>
                   <span>回复了你的话题</span>
-                  <router-link to="/topic">topic title</router-link>
+                  <router-link :to="`/topic/${item.topic.id}`">{{item.topic.title}}</router-link>
               </div>
-          </li>
-          <li>
-              <div>
-                  <router-link to="/user">liyanyan1994</router-link>
+              <div v-else-if="item.type === 'at'">
+                  <router-link :to="`/user/${item.author.loginname}`">{{item.author.loginname}}</router-link>
                   <span>在话题</span>
-                  <router-link to="/topic">topic title</router-link>
+                  <router-link :to="`/topic/${item.topic.id}`">{{item.topic.title}}</router-link>
                   <span>中@了你</span>
               </div>
           </li>
@@ -25,12 +23,18 @@
 <script>
 export default {
     name: 'name',
-    data() {
-        return {
-            loading: false
+    props: {
+        readMessages: {
+            type: Array,
+            default() {
+                return []
+            }
+        },
+        loading: {
+            type: Boolean,
+            default: true
         }
-    },
-    components: {}
+    }
 }
 </script>
 
@@ -41,10 +45,10 @@ export default {
     padding: 10px;
     .msg-loading {
         position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        height: 20px;
         background-color: #f7f7f7;
     }
     li {
