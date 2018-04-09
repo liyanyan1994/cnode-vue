@@ -5,23 +5,48 @@
           <div class="collection-title">
               <router-link to="/">主页</router-link>
               <em class="slashes"> / </em>
-              <span>i5ting收藏话题</span>
+              <span>{{this.$route.params.loginname}}收藏话题</span>
           </div>
-          <Lists/>
+          <Lists :topics="userCollections"/>
       </div>
       <SideBars/>
   </section>
 </template>
 
 <script>
+import axios from 'axios'
+import API_CONFIG from '@/api/index'
 export default {
     name: 'Collections',
     data() {
         return {
-            loading: false
+            loading: true,
+            userCollections: []
         }
     },
-    components: {}
+    created() {
+        this.fetchCollections()
+    },
+    methods: {
+        fetchCollections() {
+            axios
+                .get(
+                    `${API_CONFIG.userCollections}${
+                        this.$route.params.loginname
+                    }`
+                )
+                .then(res => {
+                    if (res.data.success) {
+                        this.loading = false
+                        this.userCollections = res.data.data
+                    }
+                })
+                .catch(e => {
+                    this.$Message.warning('不存在此用户')
+                    this.$router.replace('/')
+                })
+        }
+    }
 }
 </script>
 

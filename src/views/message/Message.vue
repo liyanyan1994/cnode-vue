@@ -36,14 +36,14 @@ export default {
     created() {
         this.fetchMessage()
     },
-    // mounted() {
-    //     if (this.$store.state.messageCount > 0) {
-    //         axios
-    //             .post(API_CONFIG.messageMarkAll)
-    //             .then(res => {})
-    //             .catch(e => e)
-    //     }
-    // },
+    mounted() {
+        if (this.$store.state.messageCount > 0) {
+            axios
+                .post(API_CONFIG.messageMarkAll)
+                .then(res => {})
+                .catch(e => e)
+        }
+    },
     methods: {
         fetchMessage() {
             axios

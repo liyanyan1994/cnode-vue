@@ -36,7 +36,10 @@ const API_CONFIG = {
     collection: 'https://cnodejs.org/api/v1/topic_collect/collect',
 
     // 点赞/取消点赞 POST  /reply/:reply_id/ups 为评论点赞
-    like: 'https://cnodejs.org/api/v1/reply/'
+    like: 'https://cnodejs.org/api/v1/reply/',
+
+    // 用户所收藏的主题 GET  /topic_collect/:loginname
+    userCollections: 'https://cnodejs.org/api/v1/topic_collect/'
 }
 
 export default API_CONFIG

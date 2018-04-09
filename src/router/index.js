@@ -30,7 +30,7 @@ export default new Router({
             component: User
         },
         {
-            path: '/collections',
+            path: '/collections/:loginname/collections',
             name: 'Collections',
             component: Collections
         },

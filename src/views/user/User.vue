@@ -14,7 +14,7 @@
                 </div>
                 <div>积分: {{user.score}}</div>
                 <div class="view-topics-collections">
-                    <router-link to="/collections">查看话题收藏</router-link>
+                    <router-link :to="`/collections/${user.loginname}/collections`">查看话题收藏</router-link>
                     <div class="create-at">注册时间 {{user.create_at | fromNow}}</div>
                 </div>
             </div>
